@@ -1,6 +1,8 @@
 class AwesomeList < ApplicationRecord
   validates_presence_of :technology, :category, :repository
   validates_uniqueness_of :technology, scope: [:category, :repository]
+  validate :repository_structure
+  
 
   after_save :update_project_info
 
@@ -17,5 +19,9 @@ class AwesomeList < ApplicationRecord
       forks_count: github_repository_handler.repository_info['forks_count'],
       time_since_last_commit: DateTime.now - DateTime.parse(github_repository_handler.commits.first['commit']['author']['date'])
     })
+  end
+
+  def repository_structure
+    repository.match(/^[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+$/) ? true : errors.add(:repository, 'is not a valid structure')
   end
 end

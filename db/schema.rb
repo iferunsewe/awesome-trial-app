@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_22_154312) do
+ActiveRecord::Schema.define(version: 2022_01_24_232051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,4 +24,30 @@ ActiveRecord::Schema.define(version: 2022_01_22_154312) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "technology_id"
+    t.index ["technology_id"], name: "index_categories_on_technology_id"
+  end
+
+  create_table "repositories", force: :cascade do |t|
+    t.string "name"
+    t.string "owner"
+    t.jsonb "project_info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_repositories_on_category_id"
+  end
+
+  create_table "technologies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "categories", "technologies"
+  add_foreign_key "repositories", "categories"
 end

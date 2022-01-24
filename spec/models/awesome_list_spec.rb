@@ -18,6 +18,10 @@ RSpec.describe AwesomeList, type: :model do
   it { should validate_presence_of(:category) }
   it { should validate_presence_of(:repository) }
   it { should validate_uniqueness_of(:technology).scoped_to(:category, :repository) }
+  it 'should validate repository structure' do
+    awesome_list.repository = 'rails/rails'
+    expect(awesome_list).to be_valid
+  end
   
   describe '#update_project_info' do
     it 'updates project_info' do

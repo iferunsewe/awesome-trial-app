@@ -1,8 +1,7 @@
 class AwesomeList < ApplicationRecord
   validates_presence_of :technology, :category, :repository
   validates_uniqueness_of :technology, scope: [:category, :repository]
-  validate :repository_structure
-  
+  validate :repository_structure, if: :saved_change_to_repository?
 
   after_save :update_project_info
 
@@ -22,6 +21,6 @@ class AwesomeList < ApplicationRecord
   end
 
   def repository_structure
-    repository.match(/^[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+$/) ? true : errors.add(:repository, 'is not a valid structure')
+    repository.match(/^[-a-zA-Z0-9._ ]+\/[-a-zA-Z0-9._ ]+$/) ? true : errors.add(:repository, 'is not a valid structure')
   end
 end

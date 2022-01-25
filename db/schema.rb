@@ -15,15 +15,6 @@ ActiveRecord::Schema.define(version: 2022_01_24_232051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "awesome_lists", force: :cascade do |t|
-    t.string "technology"
-    t.string "category"
-    t.string "repository"
-    t.jsonb "project_info"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -34,7 +25,6 @@ ActiveRecord::Schema.define(version: 2022_01_24_232051) do
 
   create_table "repositories", force: :cascade do |t|
     t.string "name"
-    t.string "owner"
     t.jsonb "project_info"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

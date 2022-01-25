@@ -1,16 +1,8 @@
-<%= form_with(model: awesome_list, local: true) do |form| %>
-  <% if awesome_list.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(awesome_list.errors.count, "error") %> prohibited this awesome_list from being saved:</h2>
+<p id="notice"><%= notice %></p>
 
-      <ul>
-        <% awesome_list.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<h1>New Repository</h1>
 
+<%= form_with(url: repositories_path) do |form| %>
   <div class="field">
     <%= form.label :technology %>
     <%= form.text_field :technology, required: true %>
@@ -21,7 +13,6 @@
     <%= form.text_field :category, required: true %>
   </div>
 
-
   <div class="field">
     <%= form.label :repository %>
     <%= form.text_field :repository, required: true %>
@@ -31,3 +22,5 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<%= link_to 'Back', url_for(:back) %>

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :repository do
-    name { "MyString" }
-    owner { "MyString" }
+    name { "my/string" }
+    category_id { 1 }
   end
 end

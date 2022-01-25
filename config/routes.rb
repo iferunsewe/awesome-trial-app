@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: 'technologies#index'
   resources :technologies, only: [:index]
   get '/:technology_name', to: 'technologies#show', as: :technology
+  get '/:technology_name/:category_name', to: 'categories#show', as: :category
 end

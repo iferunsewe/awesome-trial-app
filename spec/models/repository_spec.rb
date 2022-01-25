@@ -16,4 +16,7 @@ RSpec.describe Repository, type: :model do
     invalid_repository = build(:repository, name: 'owner/repository/invalid', category: build(:category))
     expect(invalid_repository.valid?).to be(false)
   end
+
+  it 'should update project info' do
+    
 end

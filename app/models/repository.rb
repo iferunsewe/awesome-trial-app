@@ -7,11 +7,11 @@ class Repository < ApplicationRecord
   after_save :update_project_info, if: :saved_change_to_name
 
   def stars_count
-    project_info['stars_count']
+    return project_info['stars_count'] if project_info.present?
   end
 
   def forks_count
-    project_info['forks_count']
+    return project_info['forks_count'] if project_info.present?
   end
 
   private

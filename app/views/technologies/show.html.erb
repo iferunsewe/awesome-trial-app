@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Categories for <%= @technology.name %></h1>
+
+  <ul>
+    <% @categories.each do |category| %>
+      <li><%= link_to category.name, category %></li>
+    <% end %>
+  </ul>
+
+<br>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
   resources :awesome_lists
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'technologies#index'
+  resources :technologies, only: [:index]
+  get '/:technology_name', to: 'technologies#show', as: :technology
 end

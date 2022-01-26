@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Repository, type: :model do
+  it { should validate_presence_of(:name) }
+  it { should belong_to(:category) }
+  it_behaves_like 'a name format'
+
   let(:github_repository_handler) { instance_double(GithubRepositoryHandler, repository: 'rails/rails') }
   let(:repository_info) { { 'stargazers_count' => 1, 'forks_count' => 2 } }
   let(:commits) { [{ 'commit' => { 'author' => { 'date' => '2018-01-01' } } }] }
@@ -12,9 +16,6 @@ RSpec.describe Repository, type: :model do
     allow(github_repository_handler).to receive(:repository_info).and_return(repository_info)
     allow(github_repository_handler).to receive(:commits).and_return(commits)
   end
-
-  it { should validate_presence_of(:name) }
-  it { should belong_to(:category) }
 
   it 'should validate the uniqueness of name scoped to category_id' do
     category = create(:category, technology: build(:technology))
@@ -59,6 +60,32 @@ RSpec.describe Repository, type: :model do
         repository.save
         expect(repository.project_info).to be_nil
       end
+    end
+  end
+
+  describe '.find_by_formatted_name' do
+    it 'returns the repository' do
+      repository = create(:repository, name: 'OWNER/REPOSITORY')
+      expect(Repository.find_by_formatted_name('owner/repository')).to eq(repository)
+    end
+
+    it 'returns nil if repository is not found' do
+      expect(Repository.find_by_formatted_name('invalid')).to be_nil
+    end
+  end
+
+  describe '.find_or_initialize_by_formatted_name' do
+    it 'returns the repository' do
+      repository = create(:repository, name: 'OWNER/REPOSITORY')
+      expect(Repository.find_or_initialize_by_formatted_name('owner/repository')).to eq(repository)
+    end
+
+    it 'returns a new repository' do
+      expect(Repository.find_or_initialize_by_formatted_name('invalid')).to be_a(Repository)
+    end
+
+    it 'returns nil if the name is nil' do
+      expect(Repository.find_or_initialize_by_formatted_name(nil)).to be_nil
     end
   end
 end

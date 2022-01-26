@@ -20,7 +20,7 @@ RSpec.describe "/technologies", type: :request do
     context "when technology does not exist" do
       it "renders a not found response" do
         get "/technology"
-        expect(response).to be_not_found
+        expect(response).to redirect_to technologies_path
       end
     end
   end

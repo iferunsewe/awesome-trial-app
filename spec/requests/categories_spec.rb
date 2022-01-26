@@ -13,14 +13,14 @@ RSpec.describe "/categories", type: :request do
       it "renders a not found response" do
         technology = create(:technology)
         get "/#{technology.name}/category"
-        expect(response).to be_not_found
+        expect(response).to redirect_to root_path
       end
     end
 
     context "when technology does not exist" do
       it "renders a not found response" do
         get "/technology/category"
-        expect(response).to be_not_found
+        expect(response).to redirect_to root_path
       end
     end
 
